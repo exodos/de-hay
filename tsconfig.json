@@ -22,7 +22,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/helper/*": ["components/helper/*"],
+      "@/helper/*": ["helper/*"],
       "@/layout/*": ["components/layout/*"],
       "@/lib/*": ["lib/*"]
     },
