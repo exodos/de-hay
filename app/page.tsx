@@ -1,13 +1,13 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import Carousel from "@/components/helper/carousel";
+import Carousel from "@/helper/carousel";
+import { images } from "@/helper/menu-items";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
     <div className="mt-2">
-      <Carousel />
+      <Carousel images={images} />
     </div>
   );
 }
