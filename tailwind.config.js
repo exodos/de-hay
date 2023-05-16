@@ -26,7 +26,7 @@ module.exports = {
         darkCofee: "#38220f",
       },
       animate: {
-        fade: "transition fadeOut transform duration-5000 ease-in-out",
+        fadeIn: "transition fadeOut transform duration-5000 ease-in-out",
       },
       keyframes: (theme) => ({
         fadeOut: {
@@ -43,5 +43,5 @@ module.exports = {
     },
   },
 
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

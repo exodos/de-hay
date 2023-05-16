@@ -1,4 +1,4 @@
-import SearchProduct from "@/components/helper/search-product";
+// import SearchProduct from "@/components/helper/search-product";
 import { baseUrl } from "@/lib/constants";
 import {
   BuildingOfficeIcon,
@@ -27,7 +27,7 @@ const ProductListPage = async ({ params }: { params: { slug: string } }) => {
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           {headerText}
         </h1>
-        <SearchProduct headerText={headerText} />
+        {/* <SearchProduct headerText={headerText} /> */}
       </header>
       <div className="mt-12 grid grid-cols-1 gap-6 bg-gray-50">
         <section aria-labelledby="cart-heading" className="col-span-2">

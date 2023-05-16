@@ -20,6 +20,7 @@ export default function RootLayout({
         {/* @ts-expect-error Async Server Component */}
         <Nav />
         <main>{children}</main>
+        {/* <main className="min-h-full">{children}</main> */}
       </body>
     </html>
   );

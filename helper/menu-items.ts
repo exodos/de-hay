@@ -2,6 +2,7 @@ export const menuItems = [
   {
     id: 1,
     title: "Smart Identity",
+    // url: "/product/Smart Identity/ZKBio Time API",
     subMenu: [
       {
         id: 11,
@@ -24,7 +25,7 @@ export const menuItems = [
       {
         id: 14,
         title: "Biometrics Module",
-        icon: "IoFingerPrint",
+        icon: "BsFingerprint",
         url: "/product/Smart Identity/Biometrics Module",
       },
       {
@@ -36,7 +37,7 @@ export const menuItems = [
       {
         id: 16,
         title: "Biometrics Terminal",
-        icon: "IoTerminalOutline",
+        icon: "GrShieldSecurity",
         url: "/product/Smart Identity/Biometrics Terminal",
       },
       {
@@ -50,6 +51,7 @@ export const menuItems = [
   {
     id: 2,
     title: "Smart Entrance Control",
+    // url: "/product/Smart Entrance Control/Body Temperature Detection/Entrance Control",
     subMenu: [
       {
         id: 21,
@@ -610,19 +612,19 @@ export const menuItems = [
       {
         id: 71,
         title: "Smart Identity",
-        image: "/product-image/smart-identity.png",
+        img: "/product-image/smart-identity.png",
         url: "/product/Solution/Smart Identity",
       },
       {
         id: 72,
         title: "Smart Entrance Controle",
-        image: "/product-image/smart-entrance.png",
+        img: "/product-image/smart-entrance.png",
         url: "/product/Solution/Smart Entrance Controle",
       },
       {
         id: 73,
         title: "Smart Office",
-        image: "/product-image/smart-office.png",
+        img: "/product-image/smart-office.png",
         url: "/product/Solution/Smart Office",
       },
     ],
@@ -634,25 +636,25 @@ export const menuItems = [
       {
         id: 81,
         title: "Networking",
-        image: "/product-image/networking.png",
+        img: "/product-image/networking.png",
         url: "/product/Service/Networking",
       },
       {
         id: 82,
         title: "Security",
-        image: "/product-image/security.png",
+        img: "/product-image/security.png",
         url: "/product/Service/Security",
       },
       {
         id: 83,
         title: "Managed Services",
-        image: "/product-image/Managed-services.jpg",
+        img: "/product-image/Managed-services.jpg",
         url: "/product/Service/Managed Services",
       },
       {
         id: 84,
         title: "Software And Web Development",
-        image: "/product-image/web-development.png",
+        img: "/product-image/web-development.png",
         url: "/product/Service/Software And Web Development",
       },
     ],
@@ -664,25 +666,25 @@ export const menuItems = [
       {
         id: 91,
         title: "Training center",
-        image: "/product-image/training-center.png",
+        img: "/product-image/training-center.png",
         url: "/product/Support/Training center",
       },
       {
         id: 92,
         title: "Download center",
-        image: "/product-image/download-center.png",
+        img: "/product-image/download-center.png",
         url: "/product/Support/Download center",
       },
       {
         id: 93,
         title: "After-sales Service",
-        image: "/product-image/aftersale-service.png",
+        img: "/product-image/aftersale-service.png",
         url: "/product/Support/After-sales Service",
       },
       {
         id: 94,
         title: "Security And Bulletins",
-        image: "/product-image/service-bulletins.png",
+        img: "/product-image/service-bulletins.png",
         url: "/product/Support/Security And Bulletins",
       },
     ],
@@ -695,5 +697,5 @@ export const images = [
   { id: 3, src: "/slides/slide-img-3.png", name: "slide 3" },
   { id: 4, src: "/slides/slide-img-4.png", name: "slide 4" },
   { id: 5, src: "/slides/slide-img-5.png", name: "slide 5" },
-  { id: 6, src: "/slides/slide-img-5.png", name: "slide 6" },
+  { id: 6, src: "/slides/slide-img-6.png", name: "slide 6" },
 ];

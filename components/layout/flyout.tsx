@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { FiChevronDown } from "react-icons/fi";
-import { Icon } from "./icons";
 import { BiChevronRight } from "react-icons/bi";
-import { MyImage } from "./my-images";
-import MyLink from "./my-link";
+import { Icon } from "@/helper/icons";
+import { MyImage } from "@/helper/my-images";
+import MyLink from "@/helper/my-link";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -15,7 +15,7 @@ const FlayoutMenu = ({ navigation }) => {
   const buttonRef = useRef(null);
   const [openState, setOpenState] = useState(false);
 
-  const toggleMenu = (open) => {
+  const toggleMenu = (open: any) => {
     setOpenState((openState) => !openState);
     buttonRef?.current?.click();
   };
@@ -56,13 +56,12 @@ const FlayoutMenu = ({ navigation }) => {
             onMouseLeave={() => onHover(open, "onMouseLeave")}
             className="py-5"
           >
-            {/* <div className="py-5"> */}
-            <div className="mx-auto max-w-full px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <Popover.Button ref={buttonRef}>
                 <div
                   className={classNames(
                     open ? "text-gray-100" : "text-gray-400",
-                    "group inline-flex items-center gap-x-1 text-sm font-medium leading-6"
+                    "inline-flex items-center gap-x-1 text-sm font-medium leading-6"
                   )}
                   onClick={() => handleClick(open)}
                 >
@@ -71,7 +70,6 @@ const FlayoutMenu = ({ navigation }) => {
                 </div>
               </Popover.Button>
             </div>
-            {/* </div> */}
             <Transition
               as={Fragment}
               enter="transition ease-out duration-100"
@@ -81,8 +79,8 @@ const FlayoutMenu = ({ navigation }) => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Popover.Panel className="absolute inset-x-0 top-1 pt-14 -z-10 w-screen max-w-fit lg:-translate-x-52 xl:-translate-x-80">
-                <div className="w-screen max-w-[90%] overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
+              <Popover.Panel className="absolute top-1 pt-14 -z-10 w-screen max-w-fit lg:-translate-x-52 xl:-translate-x-80">
+                <div className="w-screen max-w-full overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
                   <div className="grid xl:grid-cols-4 sm:grid-cols-2 gap-x-1 sm:gap-x-1 mt-10">
                     {navigation?.subMenu?.map((subItem: any, subIndex: any) => (
                       <div
@@ -129,7 +127,7 @@ const FlayoutMenu = ({ navigation }) => {
                                   </a>
                                 </MyLink>
                               )}
-                              {/* {subItem?.lastMenu &&
+                              {subItem?.lastMenu &&
                                 subItem?.lastMenu.map(
                                   (item: any, index: any) => (
                                     <div key={index}>
@@ -141,7 +139,7 @@ const FlayoutMenu = ({ navigation }) => {
                                       </MyLink>
                                     </div>
                                   )
-                                )} */}
+                                )}
                             </div>
                           </div>
                         </div>
