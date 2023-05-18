@@ -56,7 +56,7 @@ const FlayoutMenu = ({ navigation }) => {
             onMouseLeave={() => onHover(open, "onMouseLeave")}
             className="py-5"
           >
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-8xl px-6 lg:px-8">
               <Popover.Button ref={buttonRef}>
                 <div
                   className={classNames(
@@ -72,16 +72,19 @@ const FlayoutMenu = ({ navigation }) => {
             </div>
             <Transition
               as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 -translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 -translate-y-1"
             >
-              <Popover.Panel className="absolute top-1 pt-14 -z-10 w-screen max-w-fit lg:-translate-x-52 xl:-translate-x-80">
-                <div className="w-screen max-w-full overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
-                  <div className="grid xl:grid-cols-4 sm:grid-cols-2 gap-x-1 sm:gap-x-1 mt-10">
+              {/* <Popover.Panel className="absolute inset-x-0 top-0 pt-16 -z-10 w-screen max-w- lg:-translate-x-52 xl:-translate-x-80">
+                <div className="w-screen max-w-max overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
+                  <div className="grid xl:grid-cols-4 sm:grid-cols-2 gap-x-1 sm:gap-x-1 mt-10"> */}
+              <Popover.Panel className="absolute left-0 z-10 mt-5 flex w-screen max-w-max -translate-x-24 px-4">
+                <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-1 p-4 lg:grid-cols-2">
                     {navigation?.subMenu?.map((subItem: any, subIndex: any) => (
                       <div
                         key={subIndex}
@@ -104,20 +107,7 @@ const FlayoutMenu = ({ navigation }) => {
                           </h1>
                           <div className="pt-1 px-2">
                             <div className="grid grid-cols-1 gap-2">
-                              {subItem.lastMenu ? (
-                                subItem?.lastMenu.map(
-                                  (item: any, index: any) => (
-                                    <div key={index}>
-                                      <MyLink href={item.title}>
-                                        <a className="text-gray-500 block hover:text-lightGreen">
-                                          {item.title}
-                                          <span className="relative inset-0" />
-                                        </a>
-                                      </MyLink>
-                                    </div>
-                                  )
-                                )
-                              ) : (
+                              {!subItem?.lastMenu ? (
                                 <MyLink href={subItem.url}>
                                   <a className="text-gray-500 block hover:text-lightGreen">
                                     <span className="relative inset-0 inline-flex">
@@ -126,20 +116,20 @@ const FlayoutMenu = ({ navigation }) => {
                                     </span>
                                   </a>
                                 </MyLink>
-                              )}
-                              {subItem?.lastMenu &&
-                                subItem?.lastMenu.map(
-                                  (item: any, index: any) => (
-                                    <div key={index}>
-                                      <MyLink href={item.url}>
+                              ) : (
+                                subItem?.lastMenu
+                                  ?.slice(0, 4)
+                                  ?.map((lastItem: any, lastIndex: any) => (
+                                    <div key={lastIndex}>
+                                      <MyLink href={lastItem.url}>
                                         <a className="text-gray-500 block hover:text-lightGreen">
-                                          {item.title}
+                                          {lastItem.title}
                                           <span className="relative inset-0" />
                                         </a>
                                       </MyLink>
                                     </div>
-                                  )
-                                )}
+                                  ))
+                              )}
                             </div>
                           </div>
                         </div>

@@ -2,7 +2,7 @@ export const menuItems = [
   {
     id: 1,
     title: "Smart Identity",
-    // url: "/product/Smart Identity/ZKBio Time API",
+    url: "/product/Smart Identity/ZKBio Time API",
     subMenu: [
       {
         id: 11,
@@ -51,7 +51,7 @@ export const menuItems = [
   {
     id: 2,
     title: "Smart Entrance Control",
-    // url: "/product/Smart Entrance Control/Body Temperature Detection/Entrance Control",
+    url: "/product/Smart Entrance Control/Body Temperature Detection/Entrance Control",
     subMenu: [
       {
         id: 21,
@@ -313,6 +313,7 @@ export const menuItems = [
   {
     id: 3,
     title: "Smart Office",
+    url: "/product/Smart Office/Time Attendance/Face",
     subMenu: [
       {
         id: 31,
@@ -440,6 +441,7 @@ export const menuItems = [
   {
     id: 4,
     title: "Green Label",
+    url: "/product/Green Label/Time Attendance/Standalone Device",
     subMenu: [
       {
         id: 41,
@@ -485,6 +487,7 @@ export const menuItems = [
   {
     id: 5,
     title: "Armatura",
+    url: "/product/Armatura/Reader/Explorer Series",
     subMenu: [
       {
         id: 51,
@@ -554,6 +557,7 @@ export const menuItems = [
   {
     id: 6,
     title: "Software",
+    url: "/product/Software/ZKBio Access IVS",
     subMenu: [
       {
         id: 61,
@@ -608,6 +612,7 @@ export const menuItems = [
   {
     id: 7,
     title: "Solution",
+    url: "/product/Solution/Smart Identity",
     subMenu: [
       {
         id: 71,
@@ -632,6 +637,7 @@ export const menuItems = [
   {
     id: 8,
     title: "Service",
+    url: "/product/Service/Networking",
     subMenu: [
       {
         id: 81,
@@ -662,6 +668,7 @@ export const menuItems = [
   {
     id: 9,
     title: "Support",
+    url: "/product/Support/Training center",
     subMenu: [
       {
         id: 91,
