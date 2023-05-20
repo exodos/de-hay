@@ -15,12 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="h-full bg-gray-100">
+      <body className="h-full">
         {/* @ts-expect-error Async Server Component */}
         <Nav />
         <main>{children}</main>
-        {/* <main className="min-h-full">{children}</main> */}
       </body>
     </html>
   );

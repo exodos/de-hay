@@ -41,5 +41,7 @@ export function Icon({ nameIcon }: typesPropsIcon): JSX.Element {
     }
   );
 
-  return <ElementIcon />;
+  return (
+    <ElementIcon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
+  );
 }

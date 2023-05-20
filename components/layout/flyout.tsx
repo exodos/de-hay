@@ -48,7 +48,9 @@ const FlayoutMenu = ({ navigation }) => {
   });
 
   return (
-    <Popover className="relative">
+    // <Popover className="relative">
+
+    <Popover className="static">
       {({ open }) => (
         <>
           <div
@@ -56,7 +58,7 @@ const FlayoutMenu = ({ navigation }) => {
             onMouseLeave={() => onHover(open, "onMouseLeave")}
             className="py-5"
           >
-            <div className="mx-auto max-w-8xl px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <Popover.Button ref={buttonRef}>
                 <div
                   className={classNames(
@@ -66,7 +68,6 @@ const FlayoutMenu = ({ navigation }) => {
                   onClick={() => handleClick(open)}
                 >
                   <span>{navigation.title}</span>
-                  {/* <FiChevronDown className="h-5 w-5 mr-5" aria-hidden="true" /> */}
                 </div>
               </Popover.Button>
             </div>
@@ -79,27 +80,22 @@ const FlayoutMenu = ({ navigation }) => {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 -translate-y-1"
             >
-              {/* <Popover.Panel className="absolute inset-x-0 top-0 pt-16 -z-10 w-screen max-w- lg:-translate-x-52 xl:-translate-x-80">
-                <div className="w-screen max-w-max overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
-                  <div className="grid xl:grid-cols-4 sm:grid-cols-2 gap-x-1 sm:gap-x-1 mt-10"> */}
-              <Popover.Panel className="absolute left-0 z-10 mt-5 flex w-screen max-w-max -translate-x-24 px-4">
-                <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
-                  <div className="grid grid-cols-1 gap-x-6 gap-y-1 p-4 lg:grid-cols-2">
+              <Popover.Panel className="absolute left-0 top-10 z-50 mt-5 flex w-screen max-w-fit px-2">
+                <div className="w-screen max-w-max flex-auto overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
+                  <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-x-3 sm:gap-x-1 mt-10">
                     {navigation?.subMenu?.map((subItem: any, subIndex: any) => (
                       <div
                         key={subIndex}
-                        className="group relative -mx-3 flex gap-1 rounded-lg p-2S text-sm leading-6 sm:flex-col sm:p-6"
+                        className="group relative -m-3 flex gap-1 rounded-lg p-2S text-sm leading-6 sm:flex-col sm:p-6"
                       >
                         <div>
                           {subItem.icon ? (
-                            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-lightBlue text-white sm:h-12 sm:w-12">
+                            <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:text-indigo-600 bg-gray-50 group-hover:bg-white">
                               <Icon nameIcon={subItem.icon} />
                             </div>
                           ) : (
-                            <div className="relative shrink-1">
-                              <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                                <MyImage image={subItem.img} />
-                              </div>
+                            <div className="relative flex-none">
+                              <MyImage image={subItem.img} />
                             </div>
                           )}
                           <h1 className="mt-2 font-medium text-gray-900 underline underline-offset-8 text-sm py-5 hover:text-lightGreen">
@@ -145,4 +141,5 @@ const FlayoutMenu = ({ navigation }) => {
     </Popover>
   );
 };
+
 export default FlayoutMenu;

@@ -1,15 +1,15 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { FiChevronDown } from "react-icons/fi";
-import { Icon } from "./icons";
 import { BiChevronRight } from "react-icons/bi";
-import { MyImage } from "./my-images";
-import MyLink from "./my-link";
+import { Icon } from "@/helper/icons";
+import { MyImage } from "@/helper/my-images";
+import MyLink from "@/helper/my-link";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
-const FlayoutMenu = ({ navigation }) => {
+const FlayTest = ({ navigation }) => {
   let timeout;
   const timeoutDuration = 100;
   const buttonRef = useRef(null);
@@ -48,7 +48,9 @@ const FlayoutMenu = ({ navigation }) => {
   });
 
   return (
-    <Popover className="relative">
+    // <Popover className="relative">
+
+    <Popover className="static">
       {({ open }) => (
         <>
           <div
@@ -56,42 +58,41 @@ const FlayoutMenu = ({ navigation }) => {
             onMouseLeave={() => onHover(open, "onMouseLeave")}
             className="py-5"
           >
-            <div className="py-5">
-              <div className="mx-auto max-w-full px-6 lg:px-8">
-                <Popover.Button ref={buttonRef}>
-                  <div
-                    className={classNames(
-                      open ? "text-gray-100" : "text-gray-400",
-                      "group inline-flex items-center gap-x-1 text-sm font-medium leading-6"
-                    )}
-                    onClick={() => handleClick(open)}
-                  >
-                    <span>{navigation.title}</span>
-                    {/* <FiChevronDown className="h-5 w-5 mr-5" aria-hidden="true" /> */}
-                  </div>
-                </Popover.Button>
-              </div>
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <Popover.Button ref={buttonRef}>
+                <div
+                  className={classNames(
+                    open ? "text-gray-100" : "text-gray-400",
+                    "inline-flex items-center gap-x-1 text-sm font-medium leading-6"
+                  )}
+                  onClick={() => handleClick(open)}
+                >
+                  <span>{navigation.title}</span>
+                </div>
+              </Popover.Button>
             </div>
             <Transition
               as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 -translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 -translate-y-1"
             >
-              <Popover.Panel className="absolute inset-x-0 top-0 pt-14 z-50 w-screen max-w-fit lg:-translate-x-52 xl:-translate-x-80">
-                <div className="w-screen max-w-[90%] overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
-                  <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-x-1 sm:gap-x-1 mt-10">
+              <Popover.Panel className="absolute left-0 top-10 z-50 mt-5 flex w-screen max-w-fit px-2">
+                <div className="w-screen max-w-max flex-auto overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
+                  <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-x-3 sm:gap-x-1 mt-10">
                     {navigation?.subMenu?.map((subItem: any, subIndex: any) => (
                       <div
                         key={subIndex}
-                        className="group relative -mx-3 flex gap-1 rounded-lg p-2S text-sm leading-6 sm:flex-col sm:p-6"
+                        className="group relative -m-3 flex gap-1 rounded-lg p-2S text-sm leading-6 sm:flex-col sm:p-6"
                       >
                         <div>
                           {subItem.icon ? (
-                            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-lightBlue text-white sm:h-12 sm:w-12">
+                            // <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-lightBlue text-white sm:h-12 sm:w-12">
+
+                            <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:text-indigo-600 bg-gray-50 group-hover:bg-white">
                               <Icon nameIcon={subItem.icon} />
                             </div>
                           ) : (
@@ -106,20 +107,7 @@ const FlayoutMenu = ({ navigation }) => {
                           </h1>
                           <div className="pt-1 px-2">
                             <div className="grid grid-cols-1 gap-2">
-                              {subItem.lastMenu ? (
-                                subItem?.lastMenu.map(
-                                  (item: any, index: any) => (
-                                    <div key={index}>
-                                      <MyLink href={item.title}>
-                                        <a className="text-gray-500 block hover:text-lightGreen">
-                                          {item.title}
-                                          <span className="relative inset-0" />
-                                        </a>
-                                      </MyLink>
-                                    </div>
-                                  )
-                                )
-                              ) : (
+                              {!subItem?.lastMenu ? (
                                 <MyLink href={subItem.url}>
                                   <a className="text-gray-500 block hover:text-lightGreen">
                                     <span className="relative inset-0 inline-flex">
@@ -128,20 +116,20 @@ const FlayoutMenu = ({ navigation }) => {
                                     </span>
                                   </a>
                                 </MyLink>
-                              )}
-                              {subItem?.lastMenu &&
-                                subItem?.lastMenu.map(
-                                  (item: any, index: any) => (
-                                    <div key={index}>
-                                      <MyLink href={item.url}>
+                              ) : (
+                                subItem?.lastMenu
+                                  ?.slice(0, 4)
+                                  ?.map((lastItem: any, lastIndex: any) => (
+                                    <div key={lastIndex}>
+                                      <MyLink href={lastItem.url}>
                                         <a className="text-gray-500 block hover:text-lightGreen">
-                                          {item.title}
+                                          {lastItem.title}
                                           <span className="relative inset-0" />
                                         </a>
                                       </MyLink>
                                     </div>
-                                  )
-                                )}
+                                  ))
+                              )}
                             </div>
                           </div>
                         </div>
@@ -157,4 +145,4 @@ const FlayoutMenu = ({ navigation }) => {
     </Popover>
   );
 };
-export default FlayoutMenu;
+export default FlayTest;

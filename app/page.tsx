@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <div className="mt-14">
+      {/* <div> */}
       <Carousel images={images} />
     </div>
   );

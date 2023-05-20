@@ -4,10 +4,8 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
 import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -15,7 +13,7 @@ import { menuItems } from "@/helper/menu-items";
 import FlayoutMenu from "./flyout";
 import MyLink from "@/helper/my-link";
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
