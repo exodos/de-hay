@@ -674,7 +674,8 @@ export const menuItems = [
         id: 91,
         title: "Training center",
         img: "/product-image/training-center.png",
-        url: "/product/Support/Training center",
+        // url: "/product/Support/Training center",
+        url: "/product",
       },
       {
         id: 92,

@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { FiChevronDown } from "react-icons/fi";
-import { Icon } from "./icons";
-import { MyImage } from "./my-images";
-import MyLink from "./my-link";
 import { BiChevronRight } from "react-icons/bi";
+import { Icon } from "@/helper/icons";
+import { MyImage } from "@/helper/my-images";
+import MyLink from "@/helper/my-link";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");

@@ -24,7 +24,9 @@
       "@/components/*": ["components/*"],
       "@/app/*": ["app/*"],
       "@/helper/*": ["helper/*"],
-      "@/lib/*": ["lib/*"]
+      "@/lib/*": ["lib/*"],
+      "@/public/*": ["public/*"],
+      "@/configs/*": ["configs/*"]
     },
     // "strictNullChecks": true
     "strictNullChecks": false

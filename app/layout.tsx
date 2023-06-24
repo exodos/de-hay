@@ -1,6 +1,9 @@
-import Nav from "@/components/layout/nav";
+import { getServerSession } from "next-auth";
+import Nav from "./(main)/nav";
+import AppProviders from "./AppProviders";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,17 +12,16 @@ export const metadata = {
   description: "Delivering the technology you deserve",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
-    <html lang="en" className="h-full bg-gray-100">
-      <body className="h-full">
-        {/* @ts-expect-error Async Server Component */}
-        <Nav />
-        <main>{children}</main>
+    <html lang="en">
+      <body>
+        <AppProviders session={session}>{children}</AppProviders>
       </body>
     </html>
   );

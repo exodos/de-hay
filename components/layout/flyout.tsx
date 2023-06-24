@@ -48,8 +48,6 @@ const FlayoutMenu = ({ navigation }) => {
   });
 
   return (
-    // <Popover className="relative">
-
     <Popover className="static">
       {({ open }) => (
         <>
@@ -80,7 +78,7 @@ const FlayoutMenu = ({ navigation }) => {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 -translate-y-1"
             >
-              <Popover.Panel className="absolute left-0 top-10 z-50 mt-5 flex w-screen max-w-fit px-2">
+              <Popover.Panel className="absolute left-0 top-10 z-10 mt-5 flex w-screen max-w-fit px-2">
                 <div className="w-screen max-w-max flex-auto overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
                   <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-x-3 sm:gap-x-1 mt-10">
                     {navigation?.subMenu?.map((subItem: any, subIndex: any) => (
@@ -90,7 +88,7 @@ const FlayoutMenu = ({ navigation }) => {
                       >
                         <div>
                           {subItem.icon ? (
-                            <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:text-indigo-600 bg-gray-50 group-hover:bg-white">
+                            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:text-indigo-600 bg-gray-50 group-hover:bg-white">
                               <Icon nameIcon={subItem.icon} />
                             </div>
                           ) : (
@@ -98,7 +96,7 @@ const FlayoutMenu = ({ navigation }) => {
                               <MyImage image={subItem.img} />
                             </div>
                           )}
-                          <h1 className="mt-2 font-medium text-gray-900 underline underline-offset-8 text-sm py-5 hover:text-lightGreen">
+                          <h1 className="font-semibold text-gray-900 underline underline-offset-8 text-sm py-5 hover:text-lightGreen">
                             {subItem?.title}
                           </h1>
                           <div className="pt-1 px-2">
@@ -118,7 +116,7 @@ const FlayoutMenu = ({ navigation }) => {
                                   ?.map((lastItem: any, lastIndex: any) => (
                                     <div key={lastIndex}>
                                       <MyLink href={lastItem.url}>
-                                        <a className="text-gray-500 block hover:text-lightGreen">
+                                        <a className="text-gray-800 font-normal block hover:text-lightGreen">
                                           {lastItem.title}
                                           <span className="relative inset-0" />
                                         </a>

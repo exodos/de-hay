@@ -2,16 +2,16 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Dialog } from "@headlessui/react";
+import { Dialog, Menu } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
-
 import { menuItems } from "@/helper/menu-items";
 import FlayoutMenu from "./flyout";
 import MyLink from "@/helper/my-link";
+import { ChevronDownIcon } from "lucide-react";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -53,65 +53,71 @@ const NavBar = () => {
             <span className="sr-only">View notifications</span>
             <BellIcon className="h-6 w-6" aria-hidden="true" />
           </button>
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your profile</span>
-            <FaUserCircle className="h-8 w-8 rounded-full bg-gray-50" />
-          </a>
+          <Menu as="div" className="relative ml-3">
+            <div>
+              <Menu.Button className="flex max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-600">
+                <FaUserCircle className="h-8 w-8 rounded-full bg-gray-50" />
+
+                <ChevronDownIcon
+                  className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"
+                  aria-hidden="true"
+                />
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href="#"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700"
+                      )}
+                    >
+                      Your Profile
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href="#"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700"
+                      )}
+                    >
+                      Settings
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href="#"
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700"
+                      )}
+                    >
+                      Logout
+                    </a>
+                  )}
+                </Menu.Item>
+              </Menu.Items>
+            </Transition>
+          </Menu>
         </div>
       </div>
-      {/* <Dialog
-        as="div"
-        className="lg:hidden"
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-      >
-        <div className="fixed inset-0 z-50" />
-        <Dialog.Panel className="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-gray-700 px-4 pb-6 sm:max-w-sm sm:px-6 sm:ring-1 sm:ring-gray-900/10">
-          
-          <div className="-ml-0.5 flex h-16 items-center gap-x-6">
-            <button
-              type="button"
-              className="-m-2.5 p-2.5 text-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
-            <div className="-ml-0.5">
-              <a href="#" className="-m-1.5 block p-1.5">
-                <span className="sr-only">Your Company</span>
-                <Image
-                  src={"/logos/de-hay.png"}
-                  alt="De-hay Technologies"
-                  className="h-8 w-auto"
-                  width={200}
-                  height={200}
-                />
-              </a>
-            </div>
-          </div>
-          <div className="mt-2 space-y-2">
-            {menuItems.map((item, i) => {
-              return (
-                <MyLink href={item.url} key={i}>
-                  <a
-                    key={item.title}
-                    className={classNames(
-                      item.url == pathname
-                        ? "bg-gray-800 text-gray-100"
-                        : "text-gray-500 bg-gray-50",
-                      "-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-300"
-                    )}
-                  >
-                    {item.title}
-                  </a>
-                </MyLink>
-              );
-            })}
-          </div>
-        </Dialog.Panel>
-      </Dialog> */}
-
       <Transition.Root show={mobileMenuOpen} as={Fragment}>
         <Dialog
           as="div"

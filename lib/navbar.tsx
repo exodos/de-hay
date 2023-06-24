@@ -1,13 +1,14 @@
+"use client";
 import { ReactNode, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { FaUserCircle, FaUserTie } from "react-icons/fa";
 
-import { menuItems } from "@/lib/helpers";
-import MyLink from "./my-link";
 import { useRouter } from "next/router";
 import FlayoutMenu from "./flyout-menu";
+import { menuItems } from "@/helper/menu-items";
+import MyLink from "@/helper/my-link";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");

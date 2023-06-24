@@ -17,7 +17,7 @@ model User {
   lastName           String   @map("last_name")
   email              String   @unique @db.VarChar(250)
   password           String
-  role               Role     @default(USER)
+  roles              Role[]
   mobileNumber       String   @unique @map("mobile_number")
   adminResetPassword Boolean  @default(true) @map("admin_reset_password")
   createdAt          DateTime @default(now()) @map("created_at")
@@ -79,8 +79,30 @@ model ProductSubLine {
   @@map("product_sub_line")
 }
 
-enum Role {
-  SUPERADMIN
-  USER
-  ADMIN
+model Role {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  status    STATUS?   @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  users     User[]
+  abilities Ability[]
+}
+
+model Ability {
+  id       String   @id @default(cuid())
+  action   String[]
+  subject  String[]
+  inverted Boolean  @default(false)
+  role     Role     @relation(fields: [roleId], references: [id])
+  roleId   String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+enum STATUS {
+  ACTIVE
+  INACTIVE
 }
