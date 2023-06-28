@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const footerNavigation = {
   about: [
@@ -16,14 +17,43 @@ const footerNavigation = {
     { name: "Product Consultation", href: "#" },
   ],
   partners: [
-    { name: "ZkTeco", href: "#", img: "/partner/ZKTeco.png" },
-    { name: "Tawasol", href: "#", img: "/partner/Tawasol.png" },
-    { name: "Down2Earth", href: "#", img: "/partner/Down2Earth.png" },
+    {
+      name: "ZkTeco",
+      href: "https://www.zkteco.com/en/",
+      img: "/partner/ZKTeco.png",
+    },
+    {
+      name: "Tawasol",
+      href: "https://www.tawasolit.com/",
+      img: "/partner/Tawasol.png",
+    },
 
-    { name: "Mitel", href: "#", img: "/partner/mitel.png" },
-    { name: "Cisco", href: "#", img: "/partner/Cisco.png" },
-    { name: "Kaspersky", href: "#", img: "/partner/Kaspersky.png" },
-    { name: "EverSource", href: "#", img: "/partner/Eversource.png" },
+    {
+      name: "Down2Earth",
+      href: "http://down2earthproject.org/",
+      img: "/partner/Down2Earth.png",
+    },
+
+    {
+      name: "Mitel",
+      href: "https://www.mitel.com/",
+      img: "/partner/mitel.png",
+    },
+    {
+      name: "Cisco",
+      href: "https://www.cisco.com/",
+      img: "/partner/Cisco.png",
+    },
+    {
+      name: "Kaspersky",
+      href: "https://www.kaspersky.co.za/",
+      img: "/partner/Kaspersky.png",
+    },
+    {
+      name: "EverSource",
+      href: "https://www.ever-source.com/",
+      img: "/partner/Eversource.png",
+    },
   ],
   social: [
     {
@@ -123,12 +153,14 @@ export default function FooterPage() {
                 <ul role="list" className="mt-6 space-y-4">
                   {footerNavigation.services.map((item) => (
                     <li key={item.name}>
-                      <a
-                        href={item.href}
+                      <Link
+                        href={item?.href}
+                        passHref
                         className="text-sm leading-6 text-gray-300 hover:text-white"
+                        target="_blank"
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -181,7 +213,6 @@ export default function FooterPage() {
                           className="h-12 w-20"
                         />
                       </a>
-                      <p className="text-gray-500">{partner?.name} </p>
                     </div>
                   </div>
                 </li>
