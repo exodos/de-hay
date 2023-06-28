@@ -12,7 +12,7 @@ function classNames(...classes: any) {
 const FlayoutMenu = ({ navigation }) => {
   let timeout;
   const timeoutDuration = 100;
-  const buttonRef = useRef(null);
+  const buttonRef: any = useRef(null);
   const [openState, setOpenState] = useState(false);
 
   const toggleMenu = (open: any) => {
@@ -80,15 +80,15 @@ const FlayoutMenu = ({ navigation }) => {
             >
               <Popover.Panel className="absolute left-0 top-10 z-10 mt-5 flex w-screen max-w-fit px-2">
                 <div className="w-screen max-w-max flex-auto overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-full">
-                  <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-x-3 sm:gap-x-1 mt-10">
+                  <div className="mt-10 grid grid-cols-2 sm:gap-x-1 lg:grid-cols-4 lg:gap-x-3">
                     {navigation?.subMenu?.map((subItem: any, subIndex: any) => (
                       <div
                         key={subIndex}
-                        className="group relative -m-3 flex gap-1 rounded-lg p-2S text-sm leading-6 sm:flex-col sm:p-6"
+                        className="p-2S group relative -m-3 flex gap-1 rounded-lg text-sm leading-6 sm:flex-col sm:p-6"
                       >
                         <div>
                           {subItem.icon ? (
-                            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:text-indigo-600 bg-gray-50 group-hover:bg-white">
+                            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white group-hover:text-indigo-600">
                               <Icon nameIcon={subItem.icon} />
                             </div>
                           ) : (
@@ -96,14 +96,14 @@ const FlayoutMenu = ({ navigation }) => {
                               <MyImage image={subItem.img} />
                             </div>
                           )}
-                          <h1 className="font-semibold text-gray-900 underline underline-offset-8 text-sm py-5 hover:text-lightGreen">
+                          <h1 className="py-5 text-sm font-semibold text-gray-900 underline underline-offset-8 hover:text-lightGreen">
                             {subItem?.title}
                           </h1>
-                          <div className="pt-1 px-2">
+                          <div className="px-2 pt-1">
                             <div className="grid grid-cols-1 gap-2">
                               {!subItem?.lastMenu ? (
                                 <MyLink href={subItem.url}>
-                                  <a className="text-gray-500 block hover:text-lightGreen">
+                                  <a className="block text-gray-500 hover:text-lightGreen">
                                     <span className="relative inset-0 inline-flex">
                                       More
                                       <BiChevronRight className="h-7 w-5 " />
@@ -116,7 +116,7 @@ const FlayoutMenu = ({ navigation }) => {
                                   ?.map((lastItem: any, lastIndex: any) => (
                                     <div key={lastIndex}>
                                       <MyLink href={lastItem.url}>
-                                        <a className="text-gray-800 font-normal block hover:text-lightGreen">
+                                        <a className="block font-normal text-gray-800 hover:text-lightGreen">
                                           {lastItem.title}
                                           <span className="relative inset-0" />
                                         </a>

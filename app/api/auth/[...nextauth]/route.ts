@@ -24,6 +24,13 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: credentials?.email,
           },
+          include: {
+            roles: {
+              include: {
+                abilities: true,
+              },
+            },
+          },
         });
 
         if (!user) {
@@ -33,10 +40,12 @@ export const authOptions: NextAuthOptions = {
           credentials?.password,
           user.password
         );
-        if (isValid) {
+        if (!isValid) {
           console.log("Hash Not Matched To Logging In");
           return null;
         }
+
+        console.log("🚀 ~ file: route.ts:30 ~ authorize ~ user:", user);
 
         cookies().set("jwtToken", user.token);
         return user;
@@ -50,6 +59,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
+    // signOut: "/login",
   },
   callbacks: {
     jwt: async ({ token, user }) => {

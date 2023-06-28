@@ -12,6 +12,8 @@ import { menuItems } from "@/helper/menu-items";
 import FlayoutMenu from "./flyout";
 import MyLink from "@/helper/my-link";
 import { ChevronDownIcon } from "lucide-react";
+import { signOut } from "next-auth/react";
+import dehayLogo from "@/public/logos/logo.png";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -33,9 +35,9 @@ const NavBar = () => {
             <Bars3Icon className="h-5 w-5 text-gray-50" aria-hidden="true" />
           </button>
           <Image
-            src={"/logos/mark.png"}
+            src={dehayLogo}
             alt="De-hay Technologies"
-            className="h-8 w-auto"
+            className="h-12 w-auto"
             width={200}
             height={200}
           />
@@ -102,15 +104,15 @@ const NavBar = () => {
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
+                    <button
                       className={classNames(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-700"
                       )}
+                      onClick={() => signOut()}
                     >
                       Logout
-                    </a>
+                    </button>
                   )}
                 </Menu.Item>
               </Menu.Items>
@@ -192,8 +194,8 @@ const NavBar = () => {
                                   className={classNames(
                                     item.url == pathname
                                       ? "bg-gray-800 text-white"
-                                      : "text-gray-400 hover:text-white hover:bg-gray-800",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                      : "text-gray-400 hover:bg-gray-800 hover:text-white",
+                                    "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
                                   )}
                                 >
                                   {item.title}

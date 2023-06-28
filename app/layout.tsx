@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-import Nav from "./(main)/nav";
 import AppProviders from "./AppProviders";
 import "./globals.css";
 import { Inter } from "next/font/google";

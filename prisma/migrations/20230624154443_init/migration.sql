@@ -9,6 +9,7 @@ CREATE TABLE "user" (
     "last_name" TEXT NOT NULL,
     "email" VARCHAR(250) NOT NULL,
     "password" TEXT NOT NULL,
+    "roleId" TEXT NOT NULL,
     "mobile_number" TEXT NOT NULL,
     "admin_reset_password" BOOLEAN NOT NULL DEFAULT true,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -70,7 +71,7 @@ CREATE TABLE "product_sub_line" (
 CREATE TABLE "Role" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "status" "STATUS" DEFAULT 'ACTIVE',
+    "status" "STATUS" NOT NULL DEFAULT 'ACTIVE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -86,15 +87,8 @@ CREATE TABLE "Ability" (
     "roleId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Ability_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "_RoleToUser" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
@@ -109,11 +103,8 @@ CREATE UNIQUE INDEX "business_type_business_type_name_key" ON "business_type"("b
 -- CreateIndex
 CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 
--- CreateIndex
-CREATE UNIQUE INDEX "_RoleToUser_AB_unique" ON "_RoleToUser"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_RoleToUser_B_index" ON "_RoleToUser"("B");
+-- AddForeignKey
+ALTER TABLE "user" ADD CONSTRAINT "user_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "product_category" ADD CONSTRAINT "product_category_business_type_id_fkey" FOREIGN KEY ("business_type_id") REFERENCES "business_type"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -129,9 +120,3 @@ ALTER TABLE "product_sub_line" ADD CONSTRAINT "product_sub_line_product_line_id_
 
 -- AddForeignKey
 ALTER TABLE "Ability" ADD CONSTRAINT "Ability_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_RoleToUser" ADD CONSTRAINT "_RoleToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Role"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_RoleToUser" ADD CONSTRAINT "_RoleToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;

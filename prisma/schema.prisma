@@ -5,6 +5,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator zod {
+  provider                  = "zod-prisma"
+  output                    = "../app/zod"
+  relationModel             = true
+  modelCase                 = "camelCase"
+  modelSuffix               = "Model"
+  prismaJsonNullability     = true
+  createRelationValuesTypes = true // default is false
+  createPartialTypes        = true // default is false
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -17,7 +28,8 @@ model User {
   lastName           String   @map("last_name")
   email              String   @unique @db.VarChar(250)
   password           String
-  roles              Role[]
+  roles              Role     @relation(fields: [roleId], references: [id])
+  roleId             String
   mobileNumber       String   @unique @map("mobile_number")
   adminResetPassword Boolean  @default(true) @map("admin_reset_password")
   createdAt          DateTime @default(now()) @map("created_at")
@@ -32,15 +44,17 @@ model BusinessType {
   productCategory  ProductCategory[]
   createdAt        DateTime          @default(now()) @map("created_at")
   updatedAt        DateTime          @updatedAt @map("updated_at")
+  ProductSubLine   ProductSubLine[]
+  ProductLine      ProductLine[]
 
   @@map("business_type")
 }
 
 model ProductCategory {
   id                  Int              @id @default(autoincrement())
-  productCategoryName String?          @map("product_category_name")
-  businessType        BusinessType?    @relation(fields: [businessTypeId], references: [id])
-  businessTypeId      Int?             @map("business_type_id")
+  productCategoryName String?          @unique @map("product_category_name")
+  businessType        BusinessType?    @relation(fields: [businessTypeName], references: [businessTypeName])
+  businessTypeName    String?
   productLine         ProductLine[]
   productSubLine      ProductSubLine[]
   createdAt           DateTime         @default(now()) @map("created_at")
@@ -50,31 +64,35 @@ model ProductCategory {
 }
 
 model ProductLine {
-  id                Int              @id @default(autoincrement())
-  productLineName   String?          @map("product_line_name")
-  filterHeader      String[]         @map("filter_header")
-  productCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id])
-  productCategoryId Int?             @map("product_category_id")
-  productSubLine    ProductSubLine[]
-  createdAt         DateTime         @default(now()) @map("created_at")
-  updatedAt         DateTime         @updatedAt @map("updated_at")
+  id                  Int              @id @default(autoincrement())
+  productLineName     String?          @unique @map("product_line_name")
+  // filterHeader      String[]         @map("filter_header")
+  productCategory     ProductCategory? @relation(fields: [productCategoryName], references: [productCategoryName])
+  productCategoryName String?
+  businessType        BusinessType?    @relation(fields: [businessTypeName], references: [businessTypeName])
+  businessTypeName    String?
+  productSubLine      ProductSubLine[]
+  createdAt           DateTime         @default(now()) @map("created_at")
+  updatedAt           DateTime         @updatedAt @map("updated_at")
 
   @@map("product_line")
 }
 
 model ProductSubLine {
-  id                 Int              @id @default(autoincrement())
-  productName        String?
-  productDescription String?
-  imageUrl           String?
-  productImages      String[]
-  filterValue        Json?            @map("filter_value")
-  productCategory    ProductCategory? @relation(fields: [productCategoryId], references: [id])
-  productCategoryId  Int?             @map("product_category_id")
-  productLine        ProductLine?     @relation(fields: [productLineId], references: [id])
-  productLineId      Int?             @map("product_line_id")
-  createdAt          DateTime         @default(now()) @map("created_at")
-  updatedAt          DateTime         @updatedAt @map("updated_at")
+  id                  Int              @id @default(autoincrement())
+  productName         String?
+  productDescription  String?
+  imageUrl            String?
+  productImages       String[]
+  // filterValue        Json?            @map("filter_value")
+  productLine         ProductLine?     @relation(fields: [productLineName], references: [productLineName])
+  productLineName     String?          @map("product_line_name")
+  productCategory     ProductCategory? @relation(fields: [productCategoryName], references: [productCategoryName])
+  productCategoryName String?          @map("product_category_name")
+  businessType        BusinessType     @relation(fields: [businessTypeName], references: [businessTypeName])
+  businessTypeName    String           @map("business_type_name")
+  createdAt           DateTime         @default(now()) @map("created_at")
+  updatedAt           DateTime         @updatedAt @map("updated_at")
 
   @@map("product_sub_line")
 }
@@ -82,7 +100,7 @@ model ProductSubLine {
 model Role {
   id        String    @id @default(cuid())
   name      String    @unique
-  status    STATUS?   @default(ACTIVE)
+  status    STATUS    @default(ACTIVE)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   users     User[]
@@ -90,16 +108,14 @@ model Role {
 }
 
 model Ability {
-  id       String   @id @default(cuid())
-  action   String[]
-  subject  String[]
-  inverted Boolean  @default(false)
-  role     Role     @relation(fields: [roleId], references: [id])
-  roleId   String
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  id        String   @id @default(cuid())
+  action    String[]
+  subject   String[]
+  inverted  Boolean  @default(false)
+  role      Role     @relation(fields: [roleId], references: [id])
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum STATUS {

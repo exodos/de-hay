@@ -13,7 +13,8 @@ type AppProvidersProps = {
   children: React.ReactNode;
 };
 export default function AppProviders({ session, children }: AppProvidersProps) {
-  const abilities = session?.user?.roles.abilities;
+  const abilities = session?.user?.roles?.abilities;
+  // const abilities = (session?.user?.roles as any)?.abilities;
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={client}>
