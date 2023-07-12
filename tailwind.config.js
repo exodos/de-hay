@@ -25,6 +25,9 @@ module.exports = {
         fireYellow: "#FDA50F",
         zkCoffee: "#4c4c4c",
         darkCofee: "#38220f",
+        tremorBlue: "#3b82f6",
+        tremorIndigo: "#6366f1",
+        dehayBlue: "#136cbc",
       },
       animate: {
         fadeIn: "transition fadeOut transform duration-5000 ease-in-out",

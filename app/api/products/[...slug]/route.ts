@@ -8,22 +8,12 @@ export async function GET(
   const { slug } = params;
   const productx = slug[0].split(",");
 
-  let products;
-
-  if (slug.length === 1) {
-    products = await prisma.productSubLine.findMany({
-      where: {
-        productCategoryName: productx[1],
-        businessTypeName: productx[0],
-      },
-    });
-  } else if (slug.length === 2) {
-    products = await prisma.productSubLine.findMany({
-      productLineName: productx[2],
-      productCategory: productx[1],
+  const products = await prisma.productSubLine.findMany({
+    where: {
+      productCategoryName: productx[1],
       businessTypeName: productx[0],
-    });
-  }
+    },
+  });
 
   return NextResponse.json({ products: products });
 }

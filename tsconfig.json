@@ -36,7 +36,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "prisma/zod"
+    "prisma/zod",
+    "components/carousel/image-slider.tsx"
   ],
   "exclude": ["node_modules"]
 }

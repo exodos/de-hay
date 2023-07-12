@@ -60,7 +60,7 @@ const FlayoutMenu = ({ navigation }) => {
               <Popover.Button ref={buttonRef}>
                 <div
                   className={classNames(
-                    open ? "text-gray-100" : "text-gray-400",
+                    open ? "text-white" : "text-gray-200",
                     "inline-flex items-center gap-x-1 text-sm font-medium leading-6"
                   )}
                   onClick={() => handleClick(open)}

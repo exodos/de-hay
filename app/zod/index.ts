@@ -1,7 +1,4 @@
 export * from "./user"
 export * from "./businesstype"
 export * from "./productcategory"
-export * from "./productline"
 export * from "./productsubline"
-export * from "./role"
-export * from "./ability"

@@ -1,13 +1,18 @@
 import * as z from "zod"
-import { CompleteProductLine, relatedProductLineModel, CompleteProductCategory, relatedProductCategoryModel, CompleteBusinessType, relatedBusinessTypeModel } from "./index"
+import { CompleteProductCategory, relatedProductCategoryModel, CompleteBusinessType, relatedBusinessTypeModel } from "./index"
+
+// Helper schema for JSON fields
+type Literal = boolean | number | string
+type Json = Literal | { [key: string]: Json } | Json[]
+const literalSchema = z.union([z.string(), z.number(), z.boolean()])
+const jsonSchema: z.ZodSchema<Json> = z.lazy(() => z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)]))
 
 export const productSubLineModel = z.object({
   id: z.number().int(),
-  productName: z.string().nullish(),
-  productDescription: z.string().nullish(),
+  productName: z.string(),
+  productDescription: z.string(),
   imageUrl: z.string().nullish(),
-  productImages: z.string().array(),
-  productLineName: z.string().nullish(),
+  productImages: jsonSchema,
   productCategoryName: z.string().nullish(),
   businessTypeName: z.string().nullish(),
   createdAt: z.date(),
@@ -15,7 +20,6 @@ export const productSubLineModel = z.object({
 })
 
 export interface CompleteProductSubLine extends z.infer<typeof productSubLineModel> {
-  productLine?: CompleteProductLine | null
   productCategory?: CompleteProductCategory | null
   businessType?: CompleteBusinessType | null
 }
@@ -26,7 +30,6 @@ export interface CompleteProductSubLine extends z.infer<typeof productSubLineMod
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const relatedProductSubLineModel: z.ZodSchema<CompleteProductSubLine> = z.lazy(() => productSubLineModel.extend({
-  productLine: relatedProductLineModel.nullish(),
   productCategory: relatedProductCategoryModel.nullish(),
   businessType: relatedBusinessTypeModel.nullish(),
 }))

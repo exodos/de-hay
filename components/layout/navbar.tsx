@@ -23,7 +23,7 @@ const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   return (
-    <header className="absolute inset-x-0 top-0 z-50 flex h-16 bg-gray-800">
+    <header className="bg-dehayBlue absolute inset-x-0 top-0 z-50 flex h-16">
       <div className="mx-auto flex w-full max-w-[95%] items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex flex-1 items-center gap-x-6">
           <button

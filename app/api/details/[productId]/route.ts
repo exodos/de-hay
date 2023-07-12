@@ -7,15 +7,11 @@ export async function GET(
 ) {
   const { productId } = params;
 
-  try {
-    const products = await prisma.productSubLine.findUnique({
-      where: {
-        id: Number(productId),
-      },
-    });
+  const products = await prisma.productSubLine.findUnique({
+    where: {
+      id: Number(productId),
+    },
+  });
 
-    return NextResponse.json({ products: products });
-  } catch (err) {
-    return NextResponse.json({ message: err?.message });
-  }
+  return NextResponse.json({ products: products });
 }

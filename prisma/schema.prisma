@@ -17,105 +17,60 @@ generator zod {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
   id                 String   @id @default(uuid())
-  firstName          String   @map("first_name")
-  middleName         String   @map("middle_name")
-  lastName           String   @map("last_name")
+  firstName          String
+  lastName           String
   email              String   @unique @db.VarChar(250)
   password           String
-  roles              Role     @relation(fields: [roleId], references: [id])
-  roleId             String
-  mobileNumber       String   @unique @map("mobile_number")
-  adminResetPassword Boolean  @default(true) @map("admin_reset_password")
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt          DateTime @updatedAt @map("updated_at")
-
-  @@map("user")
+  roles              Role     @default(USER)
+  mobileNumber       String   @unique
+  adminResetPassword Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model BusinessType {
   id               Int               @id @default(autoincrement())
-  businessTypeName String            @unique @map("business_type_name")
+  businessTypeName String            @unique
   productCategory  ProductCategory[]
-  createdAt        DateTime          @default(now()) @map("created_at")
-  updatedAt        DateTime          @updatedAt @map("updated_at")
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   ProductSubLine   ProductSubLine[]
-  ProductLine      ProductLine[]
-
-  @@map("business_type")
 }
 
 model ProductCategory {
   id                  Int              @id @default(autoincrement())
-  productCategoryName String?          @unique @map("product_category_name")
-  businessType        BusinessType?    @relation(fields: [businessTypeName], references: [businessTypeName])
-  businessTypeName    String?
-  productLine         ProductLine[]
-  productSubLine      ProductSubLine[]
-  createdAt           DateTime         @default(now()) @map("created_at")
-  updatedAt           DateTime         @updatedAt @map("updated_at")
-
-  @@map("product_category")
-}
-
-model ProductLine {
-  id                  Int              @id @default(autoincrement())
-  productLineName     String?          @unique @map("product_line_name")
-  // filterHeader      String[]         @map("filter_header")
-  productCategory     ProductCategory? @relation(fields: [productCategoryName], references: [productCategoryName])
-  productCategoryName String?
+  productCategoryName String?          @unique
   businessType        BusinessType?    @relation(fields: [businessTypeName], references: [businessTypeName])
   businessTypeName    String?
   productSubLine      ProductSubLine[]
-  createdAt           DateTime         @default(now()) @map("created_at")
-  updatedAt           DateTime         @updatedAt @map("updated_at")
-
-  @@map("product_line")
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
 }
 
 model ProductSubLine {
   id                  Int              @id @default(autoincrement())
-  productName         String?
-  productDescription  String?
+  productName         String           @unique
+  productDescription  String           @db.Text
   imageUrl            String?
-  productImages       String[]
-  // filterValue        Json?            @map("filter_value")
-  productLine         ProductLine?     @relation(fields: [productLineName], references: [productLineName])
-  productLineName     String?          @map("product_line_name")
+  productImages       Json?
   productCategory     ProductCategory? @relation(fields: [productCategoryName], references: [productCategoryName])
-  productCategoryName String?          @map("product_category_name")
-  businessType        BusinessType     @relation(fields: [businessTypeName], references: [businessTypeName])
-  businessTypeName    String           @map("business_type_name")
-  createdAt           DateTime         @default(now()) @map("created_at")
-  updatedAt           DateTime         @updatedAt @map("updated_at")
-
-  @@map("product_sub_line")
+  productCategoryName String?
+  businessType        BusinessType?    @relation(fields: [businessTypeName], references: [businessTypeName])
+  businessTypeName    String?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
 }
 
-model Role {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  status    STATUS    @default(ACTIVE)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  users     User[]
-  abilities Ability[]
-}
-
-model Ability {
-  id        String   @id @default(cuid())
-  action    String[]
-  subject   String[]
-  inverted  Boolean  @default(false)
-  role      Role     @relation(fields: [roleId], references: [id])
-  roleId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
 }
 
 enum STATUS {

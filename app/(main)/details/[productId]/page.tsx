@@ -32,15 +32,19 @@ export default function ProductDetailPage({
   });
   const products = useMemo(() => productdetails?.products, [productdetails]);
 
+  const productImages = products?.productImages
+    ? Object?.values(products?.productImages)
+    : [];
+
   return (
     <>
-      <div className="bg-white pt-8">
+      <div className="min-h-full bg-white pt-8">
         <div className="mx-auto mt-10 max-w-4xl px-8 py-16 sm:px-10 sm:py-24 lg:max-w-7xl lg:px-12">
           <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
             <Tab.Group as="div" className="flex flex-col-reverse">
               <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
                 <Tab.List className="grid grid-cols-4 gap-6">
-                  {products?.productImages?.map((product: any, index: any) => (
+                  {productImages?.map((product: any, index: any) => (
                     <Tab
                       key={index}
                       className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
@@ -52,7 +56,7 @@ export default function ProductDetailPage({
                           </span>
                           <span className="absolute inset-0 overflow-hidden rounded-md">
                             <Image
-                              src={product}
+                              src={product ?? []}
                               alt=""
                               width={200}
                               height={200}
@@ -75,13 +79,13 @@ export default function ProductDetailPage({
               {/* productImages */}
 
               <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-                {products?.productImages?.map((product, index) => (
+                {productImages?.map((product: string, index) => (
                   <Tab.Panel key={index}>
                     <Image
-                      src={product}
+                      src={product ?? []}
                       alt={""}
-                      width={200}
-                      height={200}
+                      width={100}
+                      height={100}
                       className="h-full w-full object-cover object-center sm:rounded-lg"
                     />
                   </Tab.Panel>
