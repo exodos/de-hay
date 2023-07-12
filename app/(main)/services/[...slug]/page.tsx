@@ -2,6 +2,8 @@
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import FooterPage from "../../footer";
+import { useMemo } from "react";
+import ServiceCarousal from "@/components/carousel/ServiceCarousal";
 
 const getProductServices = (slug: string[]) =>
   fetch(`http://localhost:3000/api/services/${slug}`).then((res) => res.json());
@@ -19,8 +21,9 @@ export default function ServicesPage({
     queryKey: ["fetchServices"],
     queryFn: () => getProductServices(slug),
   });
-  const { services } = data ?? [];
+  const { services } = useMemo(() => data ?? [], [data]);
   const splitedProductDescription = services?.productDescription?.split(".");
+  const productImage = useMemo(() => services?.productImages, [services]);
 
   return (
     <>
@@ -97,16 +100,23 @@ export default function ServicesPage({
               </svg>
               <div className="relative mx-auto max-w-prose text-base lg:max-w-none">
                 <figure>
-                  <div className="aspect-h-7 aspect-w-12 lg:aspect-none">
-                    <Image
-                      src={services?.productImages[1]}
-                      alt=""
-                      width={1800}
-                      height={1238}
-                      className="object-fill:cover rounded-lg object-center shadow-lg"
-                    />
-                    {/* <ImageSlider images={services?.productImages} /> */}
-                  </div>
+                  {/* {Object?.values(productImage).map((images: string, index) => (
+                    <div
+                      className="aspect-h-7 aspect-w-12 lg:aspect-none"
+                      key={index}
+                    >
+                      <Image
+                        src={images}
+                        alt=""
+                        width={1800}
+                        height={1238}
+                        className="object-fill:cover rounded-lg object-center shadow-lg"
+                      />
+                    </div>
+                  ))} */}
+                  {/* <div className="aspect-h-7 aspect-w-12 lg:aspect-none"> */}
+                  <ServiceCarousal images={productImage} />
+                  {/* </div> */}
                 </figure>
               </div>
             </div>
