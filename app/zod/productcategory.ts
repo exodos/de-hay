@@ -3,7 +3,7 @@ import { CompleteBusinessType, relatedBusinessTypeModel, CompleteProductSubLine,
 
 export const productCategoryModel = z.object({
   id: z.number().int(),
-  productCategoryName: z.string().nullish(),
+  productCategoryName: z.string(),
   businessTypeName: z.string().nullish(),
   createdAt: z.date(),
   updatedAt: z.date(),

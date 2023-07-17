@@ -12,14 +12,16 @@ import { menuItems } from "@/helper/menu-items";
 import FlayoutMenu from "./flyout";
 import MyLink from "@/helper/my-link";
 import { ChevronDownIcon } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import dehayLogo from "@/public/logos/logo.png";
+import Link from "next/link";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 const NavBar = () => {
+  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   return (
@@ -34,13 +36,15 @@ const NavBar = () => {
             <span className="sr-only">Open main menu</span>
             <Bars3Icon className="h-5 w-5 text-gray-50" aria-hidden="true" />
           </button>
-          <Image
-            src={dehayLogo}
-            alt="De-hay Technologies"
-            className="h-12 w-auto"
-            width={200}
-            height={200}
-          />
+          <Link href={"/"}>
+            <Image
+              src={dehayLogo}
+              alt="De-hay Technologies"
+              className="h-12 w-auto"
+              width={200}
+              height={200}
+            />
+          </Link>
         </div>
         <nav className="hidden md:flex md:gap-x-5 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
           {menuItems.map((item, i) => {
@@ -102,19 +106,37 @@ const NavBar = () => {
                     </a>
                   )}
                 </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={classNames(
-                        active ? "bg-gray-100" : "",
-                        "block px-4 py-2 text-sm text-gray-700"
-                      )}
-                      onClick={() => signOut()}
-                    >
-                      Logout
-                    </button>
-                  )}
-                </Menu.Item>
+                {!session?.user && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link href={"/login"} legacyBehavior passHref>
+                        <a
+                          className={classNames(
+                            active ? "bg-gray-100" : "",
+                            "block px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                          Log In
+                        </a>
+                      </Link>
+                    )}
+                  </Menu.Item>
+                )}
+                {session?.user && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={classNames(
+                          active ? "bg-gray-100" : "",
+                          "block px-4 py-2 text-sm text-gray-700"
+                        )}
+                        onClick={() => signOut()}
+                      >
+                        Log Out
+                      </button>
+                    )}
+                  </Menu.Item>
+                )}
               </Menu.Items>
             </Transition>
           </Menu>

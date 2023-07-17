@@ -1,59 +1,85 @@
 "use client";
-import { baseUrl } from "@/lib/constants";
+
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-
-const getProductCategory = (slug: string[]) =>
-  fetch(`http://localhost:3000/api/products/${slug}`).then((res) => res.json());
+import { useGetProductCategory } from "../../query";
+import { useCurrentUser } from "hooks";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 
 export default function ProductListPage({
   params,
 }: {
   params: { slug: string[] };
 }) {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
   const { slug } = params;
+
   const slugLength = slug.length;
 
   const headerText = decodeURI(slug[slugLength - 1]);
 
-  const { data, isLoading, isFetching, error } = useQuery({
-    queryKey: ["fetchProduct"],
-    queryFn: () => getProductCategory(slug),
-  });
-  const { products } = data ?? [];
+  const { data: productCategory } = useGetProductCategory(slug, search);
+
+  const { products } = useMemo(() => productCategory ?? [], [productCategory]);
+  const currentUser = useCurrentUser();
   return (
     <>
       <div className="mx-auto max-w-6xl">
         <header className="mt-8 flex items-center justify-between px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            {headerText}
-          </h1>
-        </header>
-        <div className="flex flex-1 justify-center lg:justify-end">
-          <div className="w-full px-2 lg:px-6">
-            <label htmlFor="search" className="sr-only">
-              Search Products
-            </label>
-            <div className="relative text-gray-400 focus-within:text-gray-600">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
-              </div>
-              <input
-                id="search"
-                name="search"
-                className="block w-full rounded-md border-0 border-transparent bg-gray-100 bg-opacity-25 py-1.5 pl-10 pr-3 text-gray-600 placeholder:text-gray-800 focus:border-transparent focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-0 focus:placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                placeholder="Search projects"
-                type="search"
-              />
+          <div className="sm:flex-auto">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              {headerText}
+            </h1>
+          </div>
+          <div className="sm:flex sm:items-center">
+            <div className="sm:flex-auto">
+              {(currentUser?.roles === "SUPERADMIN" ||
+                currentUser?.roles === "ADMIN") && (
+                <Link href={"/product/new"} passHref>
+                  <button className="group relative mb-2 mr-1 inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 group-hover:from-purple-600 group-hover:to-blue-500 dark:text-white dark:focus:ring-blue-800">
+                    <span className="relative rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900">
+                      Add Product
+                    </span>
+                  </button>
+                </Link>
+              )}
             </div>
+          </div>
+        </header>
+        <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
+          <div className="w-full max-w-lg lg:max-w-xs">
+            <form className="relative flex flex-1" method="GET">
+              <label htmlFor="search" className="sr-only">
+                Search
+              </label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <MagnifyingGlassIcon
+                    className="h-5 w-5 text-white"
+                    aria-hidden="true"
+                  />
+                </div>
+                <input
+                  id="search"
+                  name="search"
+                  className="block w-full rounded-md border-0 bg-gray-400 py-1.5 pl-10 pr-3 text-white placeholder:text-gray-50 focus:bg-gray-600 focus:text-gray-200 focus:ring-0 sm:text-sm sm:leading-6"
+                  placeholder="Search Products"
+                  type="search"
+                />
+              </div>
+            </form>
           </div>
         </div>
         <div className="mt-8">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="mt-12 grid grid-cols-1 gap-6 bg-gray-50">
-              <section aria-labelledby="cart-heading" className="col-span-2">
+          <div className="mx-auto max-w-6xl px-4 sm:px-2 lg:px-4">
+            <div className="mt-12 grid grid-cols-1 gap-2 bg-gray-50 sm:gap-2">
+              <section
+                aria-labelledby="cart-heading"
+                className="col-span-2 sm:col-span-1"
+              >
                 <h2 id="cart-heading" className="sr-only">
                   Product List
                 </h2>
@@ -62,7 +88,10 @@ export default function ProductListPage({
                   className="divide-y divide-gray-200 border-b border-t border-gray-200"
                 >
                   {products?.map((product, productIdx) => (
-                    <li key={productIdx} className="flex px-20 py-6 sm:py-10">
+                    <li
+                      key={productIdx}
+                      className="flex sm:px-4 lg:px-6 py-6 sm:py-10"
+                    >
                       <div className="flex-shrink-0">
                         {product?.imageUrl ? (
                           <Image
@@ -82,8 +111,7 @@ export default function ProductListPage({
                           />
                         )}
                       </div>
-
-                      <div className="ml-20 flex flex-col justify-between space-x-10 pl-20">
+                      <div className="ml-20 flex flex-col justify-between space-x-10 sm:pl-10 lg:pl-20">
                         <div>
                           <div className="flex justify-between">
                             <h1 className="text-2xl">
@@ -96,7 +124,7 @@ export default function ProductListPage({
                             </h1>
                           </div>
                           <div className="mt-3 flex text-sm">
-                            <p className="text-gray-500">
+                            <p className="text-gray-500 break-words">
                               {`${product?.productDescription.slice(
                                 0,
                                 200

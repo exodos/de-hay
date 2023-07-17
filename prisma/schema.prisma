@@ -45,7 +45,7 @@ model BusinessType {
 
 model ProductCategory {
   id                  Int              @id @default(autoincrement())
-  productCategoryName String?          @unique
+  productCategoryName String           @unique
   businessType        BusinessType?    @relation(fields: [businessTypeName], references: [businessTypeName])
   businessTypeName    String?
   productSubLine      ProductSubLine[]
@@ -54,17 +54,17 @@ model ProductCategory {
 }
 
 model ProductSubLine {
-  id                  Int              @id @default(autoincrement())
-  productName         String           @unique
-  productDescription  String           @db.Text
+  id                  Int             @id @default(autoincrement())
+  productName         String
+  productDescription  String          @db.Text
   imageUrl            String?
   productImages       Json?
-  productCategory     ProductCategory? @relation(fields: [productCategoryName], references: [productCategoryName])
-  productCategoryName String?
-  businessType        BusinessType?    @relation(fields: [businessTypeName], references: [businessTypeName])
-  businessTypeName    String?
-  createdAt           DateTime         @default(now())
-  updatedAt           DateTime         @updatedAt
+  productCategory     ProductCategory @relation(fields: [productCategoryName], references: [productCategoryName])
+  productCategoryName String
+  businessType        BusinessType    @relation(fields: [businessTypeName], references: [businessTypeName])
+  businessTypeName    String
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 }
 
 enum Role {

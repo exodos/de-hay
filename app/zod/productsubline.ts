@@ -13,15 +13,15 @@ export const productSubLineModel = z.object({
   productDescription: z.string(),
   imageUrl: z.string().nullish(),
   productImages: jsonSchema,
-  productCategoryName: z.string().nullish(),
-  businessTypeName: z.string().nullish(),
+  productCategoryName: z.string(),
+  businessTypeName: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
 })
 
 export interface CompleteProductSubLine extends z.infer<typeof productSubLineModel> {
-  productCategory?: CompleteProductCategory | null
-  businessType?: CompleteBusinessType | null
+  productCategory: CompleteProductCategory
+  businessType: CompleteBusinessType
 }
 
 /**
@@ -30,6 +30,6 @@ export interface CompleteProductSubLine extends z.infer<typeof productSubLineMod
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
 export const relatedProductSubLineModel: z.ZodSchema<CompleteProductSubLine> = z.lazy(() => productSubLineModel.extend({
-  productCategory: relatedProductCategoryModel.nullish(),
-  businessType: relatedBusinessTypeModel.nullish(),
+  productCategory: relatedProductCategoryModel,
+  businessType: relatedBusinessTypeModel,
 }))

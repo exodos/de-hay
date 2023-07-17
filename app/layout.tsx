@@ -8,7 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "DeHay Technologies",
-  description: "Delivering the technology you deserve",
+  description:
+    "Delivering the technology you deserve| zkteco.com | zkteco ethiopia",
 };
 
 export default async function RootLayout({

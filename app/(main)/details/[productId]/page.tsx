@@ -1,18 +1,13 @@
 "use client";
 import { useMemo } from "react";
 import { Tab } from "@headlessui/react";
-import { useQuery } from "@tanstack/react-query";
 import FooterPage from "../../footer";
 import Image from "next/image";
+import { useGetProductDetails } from "../../query";
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
-
-const getProductDetails = (productId: string) =>
-  fetch(`http://localhost:3000/api/details/${productId}`).then((res) =>
-    res.json()
-  );
 
 export default function ProductDetailPage({
   params,
@@ -21,16 +16,12 @@ export default function ProductDetailPage({
 }) {
   const { productId } = params;
 
-  const {
-    data: productdetails,
-    isLoading,
-    isFetching,
-    error,
-  } = useQuery({
-    queryKey: ["fetchProductDetail", productId],
-    queryFn: () => getProductDetails(productId),
-  });
-  const products = useMemo(() => productdetails?.products, [productdetails]);
+  const { data: productDetails } = useGetProductDetails(productId);
+
+  const products = useMemo(
+    () => productDetails?.products ?? [],
+    [productDetails]
+  );
 
   const productImages = products?.productImages
     ? Object?.values(products?.productImages)
@@ -56,10 +47,12 @@ export default function ProductDetailPage({
                           </span>
                           <span className="absolute inset-0 overflow-hidden rounded-md">
                             <Image
-                              src={product ?? []}
+                              src={product?.img ?? []}
                               alt=""
-                              width={200}
-                              height={200}
+                              // width={200}
+                              // height={200}
+                              fill
+                              priority={true}
                               className="h-full w-full object-cover object-center"
                             />
                           </span>
@@ -76,13 +69,12 @@ export default function ProductDetailPage({
                   ))}
                 </Tab.List>
               </div>
-              {/* productImages */}
 
               <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-                {productImages?.map((product: string, index) => (
+                {productImages?.map((product: any, index) => (
                   <Tab.Panel key={index}>
                     <Image
-                      src={product ?? []}
+                      src={product?.img}
                       alt={""}
                       width={100}
                       height={100}
